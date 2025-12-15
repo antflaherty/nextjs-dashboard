@@ -16,8 +16,10 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useActionState(createInvoice, initialState);
 
+  console.log(state.errors, JSON.stringify(state.errors));
+
   return (
-    <form action={formAction}>
+    <form action={formAction} aria-describedby="missing-input-error">
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -129,6 +131,11 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                   {error}
                 </p>
               ))}
+          </div>
+          <div id="missing-input-error" aria-live="polite" aria-atomic="true">
+            {Object.keys(state.errors ?? {}).length > 0 && (
+              <p className="mt-2 text-sm text-red-500">Missing fields.</p>
+            )}
           </div>
         </fieldset>
       </div>
