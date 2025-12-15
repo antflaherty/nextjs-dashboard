@@ -35,6 +35,10 @@ export const { auth, signIn, signOut } = NextAuth({
           }
 
           const passwordsMatch = await bcrypt.compare(password, user.password);
+
+          if (passwordsMatch) {
+            return user;
+          }
         }
 
         return null;
